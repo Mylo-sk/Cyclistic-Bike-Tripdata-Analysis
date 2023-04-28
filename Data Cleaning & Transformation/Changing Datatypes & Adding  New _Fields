@@ -1,6 +1,6 @@
 /* PART 1
  -- Update data type for ride_length
- -- Convert from time to string and repeat for al
+ -- Convert from time to string dataype
 */
 
 
@@ -16,19 +16,19 @@ SELECT
   end_station_name,
   end_station_id,
   start_lat, 
-  start_lng, 
-	end_lat, 
+  start_lng,
+  end_lat, 
   end_lng, 
   member_casual,
   day_of_week,
   quarter
-FROM `project-analysis-384501.Cyclistic_Case_Study.2022_Q2_Table`
+FROM `project-analysis-384501.Cyclistic_Case_Study.Full_tripdata_update2`
   
  
  
 /* PART 2 
  -- Update the format for 'day_of_week' from float to string
- -- Start with 2021_Q1 and repeat for other four tables
+ -- Update the ride_length from string to interval
  -- Update 'day_of_week' format with CAST()
 */
 
@@ -44,25 +44,24 @@ SELECT
   end_station_id,
   start_lat, 
   start_lng, 
-	end_lat, 
+  end_lat, 
   end_lng, 
   member_casual,
   CAST(day_of_week AS STRING) AS day_of_week,
   quarter
-FROM `project-analysis-384501.Cyclistic_Case_Study.2022_Q2_Table`
+FROM `project-analysis-384501.Cyclistic_Case_Study.Full_tripdata_update2`
 
 
 /*
 PART 3
 --Input this next section in a new query
--- Update 'day_of_week' values in Q1, Q2, Q3, Q4.
--- Start with 2022_Q2 and repeat for other four tables
+-- Update 'day_of_week' values
 -- Update 'day_of_week' values with CASE WHEN
 */
 
 
 UPDATE
-  `project-analysis-384501.Cyclistic_Case_Study.2022_Q2_Table`
+  `project-analysis-384501.Cyclistic_Case_Study.Full_tripdata_update2`
 SET
   day_of_week =
   CASE  
