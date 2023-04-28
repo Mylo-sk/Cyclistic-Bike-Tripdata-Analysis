@@ -5,7 +5,7 @@ SELECT
   COUNT(*) as total_riders, 
   ROUND(COUNT(*) / (SELECT COUNT(*) FROM `Cyclistic_Case_Study.Full_12mths_Tripdata` ) * 100, 2) as percentage
 
-FROM `Cyclistic_Case_Study.Full_12mths_Tripdata`
+FROM `Cyclistic_Case_Study.Full_tripdata_update2`
 
 GROUP BY member_casual;
 
