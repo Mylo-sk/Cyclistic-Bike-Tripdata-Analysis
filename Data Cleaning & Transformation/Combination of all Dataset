@@ -1,0 +1,162 @@
+/* We want to combine all dataset but first we will create quartely union of for the last 12 months for this analysis:
+ -- Table 1) 2022_Q2 -> APR(04), MAY(05), JUN(06)
+ -- Table 2) 2022_Q3 -> JUL(07), AUG(08), SEP(09)
+ -- Table 3) 2022_Q4 -> OCT(10), NOV(11), DEC(12)
+ -- Table 4) 2023_Q1 -> JAN(01), FEB(O2), MAR(O3)
+ -- 
+ -- We’ll first create 2022_Q2 and then repeat for the remaining four tables
+ -- Using UNION to join 2022_Q2 tables: APR, MAY, JUN
+ */
+ 
+
+SELECT
+  ride_id,
+  rideable_type,
+  started_at,
+  ended_at,
+  ride_length,
+  start_station_name,
+  start_station_id,
+  end_station_name,
+  end_station_id,
+  start_lat, 
+  start_lng, 
+	end_lat, 
+  end_lng, 
+  member_casual,
+  day_of_week,
+'Q2' AS quarter
+FROM
+  `Cyclistic_Case_Study.C202204-divvy-tripdata`
+
+UNION DISTINCT
+  SELECT
+    ride_id,
+    rideable_type,
+    started_at,
+    ended_at,
+    ride_length,
+    start_station_name,
+    start_station_id,
+    end_station_name,
+    end_station_id,
+    start_lat, 
+    start_lng, 
+	  end_lat, 
+    end_lng, 
+    member_casual,
+    day_of_week,
+'Q2'AS quarter
+FROM `Cyclistic_Case_Study.C202205-divvy-tripdata`
+
+UNION DISTINCT
+  SELECT
+    ride_id,
+    rideable_type,
+    started_at,
+    ended_at,
+    ride_length,
+    start_station_name,
+    start_station_id,
+    end_station_name,
+    end_station_id,
+    start_lat, 
+    start_lng, 
+	  end_lat, 
+    end_lng, 
+    member_casual,
+    day_of_week,
+'Q2' AS quarter
+FROM `Cyclistic_Case_Study.C202206-divvy-tripdata`
+
+
+
+
+/* To get the full_trip_data of all 12 months combined we now can combine just the 4 grouped quarters 
+-- Combining all 4 tables using UNION
+-- Note: adjust query settings in BigQuery; For Destination, choose 'Set a destination table for query results'
+*/
+
+SELECT 
+  ride_id, 
+  member_casual, 
+  started_at, 
+  ended_at, 
+	ride_length, 
+  day_of_week, 
+  start_station_name, 
+	start_station_id, 
+  end_station_name, 
+	end_station_id, 
+  start_lat, 
+  start_lng, 
+	end_lat, 
+  end_lng, 
+  rideable_type,
+  day_of_week,
+  quarter
+FROM
+  `Cyclistic_Case_Study.2022_Q2_Table`
+UNION DISTINCT
+SELECT
+  ride_id, 
+  member_casual, 
+  started_at, 
+  ended_at, 
+	ride_length, 
+  day_of_week, 
+  start_station_name, 
+	start_station_id, 
+  end_station_name, 
+	end_station_id, 
+  start_lat, 
+  start_lng, 
+	end_lat, 
+  end_lng, 
+  rideable_type,
+  day_of_week,
+  quarter
+FROM
+  `Cyclistic_Case_Study.2022_Q3_Table`
+UNION DISTINCT
+SELECT
+  ride_id, 
+  member_casual, 
+  started_at, 
+  ended_at, 
+	ride_length, 
+  day_of_week, 
+  start_station_name, 
+	start_station_id, 
+  end_station_name, 
+	end_station_id, 
+  start_lat, 
+  start_lng, 
+	end_lat, 
+  end_lng, 
+  rideable_type,
+  day_of_week,
+  quarter
+FROM
+  `Cyclistic_Case_Study.2022_Q4_Table`
+UNION DISTINCT
+SELECT
+  ride_id, 
+  member_casual, 
+  started_at, 
+  ended_at, 
+	ride_length, 
+  day_of_week, 
+  start_station_name, 
+	start_station_id, 
+  end_station_name, 
+	end_station_id, 
+  start_lat, 
+  start_lng, 
+	end_lat, 
+  end_lng, 
+  rideable_type,
+  day_of_week,
+  quarter
+FROM
+  `Cyclistic_Case_Study.2023_Q1_Table`
