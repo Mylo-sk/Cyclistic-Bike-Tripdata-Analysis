@@ -1,0 +1,78 @@
+/* PART 1
+ -- Update data type for ride_length
+ -- Convert from time to string and repeat for al
+*/
+
+
+
+SELECT
+  ride_id,
+  rideable_type,
+  started_at,
+  ended_at,
+  CAST(ride_length AS STRING) AS ride_length,
+  start_station_name,
+  start_station_id,
+  end_station_name,
+  end_station_id,
+  start_lat, 
+  start_lng, 
+	end_lat, 
+  end_lng, 
+  member_casual,
+  day_of_week,
+  quarter
+FROM `project-analysis-384501.Cyclistic_Case_Study.2022_Q2_Table`
+  
+ 
+ 
+/* PART 2 
+ -- Update the format for 'day_of_week' from float to string
+ -- Start with 2021_Q1 and repeat for other four tables
+ -- Update 'day_of_week' format with CAST()
+*/
+
+SELECT
+  ride_id,
+  rideable_type,
+  started_at,
+  ended_at,
+  CAST(ride_length AS INTERVAL) AS ride_length,
+  start_station_name,
+  start_station_id,
+  end_station_name,
+  end_station_id,
+  start_lat, 
+  start_lng, 
+	end_lat, 
+  end_lng, 
+  member_casual,
+  CAST(day_of_week AS STRING) AS day_of_week,
+  quarter
+FROM `project-analysis-384501.Cyclistic_Case_Study.2022_Q2_Table`
+
+
+/*
+PART 3
+--Input this next section in a new query
+-- Update 'day_of_week' values in Q1, Q2, Q3, Q4.
+-- Start with 2022_Q2 and repeat for other four tables
+-- Update 'day_of_week' values with CASE WHEN
+*/
+
+
+UPDATE
+  `project-analysis-384501.Cyclistic_Case_Study.2022_Q2_Table`
+SET
+  day_of_week =
+  CASE  
+    WHEN day_of_week = "1" THEN "Sunday"
+    WHEN day_of_week = "2" THEN "Monday"
+    WHEN day_of_week = "3" THEN "Tuesday"
+    WHEN day_of_week = "4" THEN "Wednesday"
+    WHEN day_of_week = "5" THEN "Thursday"
+    WHEN day_of_week = "6" THEN "Friday"
+    WHEN day_of_week = "7" THEN "Saturday"
+    END
+WHERE
+  day_of_week IN ("1", "2", "3", "4", "5", "6", "7")
