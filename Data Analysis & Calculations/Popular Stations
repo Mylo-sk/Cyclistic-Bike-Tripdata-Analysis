@@ -1,0 +1,15 @@
+/* To check out the most popular station for users. for both members and casual bike users
+*/
+SELECT 
+  start_station_name,
+  start_lng,
+  start_lat,
+  SUM(CASE WHEN ride_id = ride_id AND start_station_name = start_station_name THEN 1 ELSE 0 END) AS total,
+  SUM(CASE WHEN member_casual = 'member' AND start_station_name = start_station_name THEN 1 ELSE 0 END) AS member,
+  SUM(CASE WHEN member_casual = 'casual' AND start_station_name = start_station_name THEN 1 ELSE 0 END) AS casual
+FROM 
+  `Cyclistic_Case_Study.Full_tripdata_update2`
+GROUP BY 
+  start_station_name, start_lng, start_lat
+ORDER BY 
+  total DESC LIMIT 1000
