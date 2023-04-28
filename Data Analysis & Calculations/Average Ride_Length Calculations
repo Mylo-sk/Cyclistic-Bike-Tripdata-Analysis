@@ -1,0 +1,33 @@
+/* Finding the avg_length of riders in each quarter of the past 12 months between the two to types of users,
+the annual members and causal users.
+*/
+
+SELECT 
+ quarter,
+ member_casual,
+ AVG(EXTRACT(HOUR FROM ride_length)*3600 + EXTRACT(MINUTE FROM ride_length) * 60 + EXTRACT(SECOND FROM ride_length)) AS avg_ride_length_in_seconds,
+ AVG(ride_length) AS avg_ride_length
+
+FROM `Cyclistic_Case_Study.Full_tripdata_update2`
+
+GROUP BY quarter, member_casual
+ORDER BY quarter
+
+--This query above extracts the hours, minutes, and seconds from the ride_length interval column using the EXTRACT function, converts them to seconds,
+-- and then uses the AVG function to calculate the average ride length for each quarter and member/casual group.
+
+
+/* we are using a CASE statement to calculate the average ride length for both member and casual trips separately.
+We are also using the GROUP BY clause to group the results by the day of the week.
+*/
+
+SELECT 
+  day_of_week,
+  COUNT(ride_id) AS number_of_trips,
+  AVG(CASE WHEN member_casual = 'member' THEN ride_length END) AS avg_member_trips,
+  AVG(CASE WHEN member_casual = 'casual' THEN ride_length END) AS avg_casual_trips,
+  AVG(ride_length) AS avg_ride_length,
+FROM 
+  `Cyclistic_Case_Study.Full_tripdata_update2`
+GROUP BY 
+  day_of_week
