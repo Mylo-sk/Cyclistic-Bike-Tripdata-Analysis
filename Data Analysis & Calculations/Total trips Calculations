@@ -1,0 +1,32 @@
+/* This query will give you the total number of riders for each member_casual group and the percentage of riders that belong to that group. The results will be sorted by member_casual.
+*/
+SELECT 
+  member_casual,
+  COUNT(*) as total_riders, 
+  ROUND(COUNT(*) / (SELECT COUNT(*) FROM `Cyclistic_Case_Study.Full_12mths_Tripdata` ) * 100, 2) as percentage
+
+FROM `Cyclistic_Case_Study.Full_12mths_Tripdata`
+
+GROUP BY member_casual;
+
+
+/*This query uses a CASE statement within the SUM function to filter the count values based on whether the rider type is member or casual. It then groups the results by day_of_week and calculates the total number of rides for each rider type. 
+*/
+
+SELECT 
+  day_of_week,
+  SUM(CASE WHEN member_casual = 'member' THEN 1 ELSE 0 END) AS total_member_rides,
+  SUM(CASE WHEN member_casual = 'casual' THEN 1 ELSE 0 END) AS total_casual_rides
+FROM `Cyclistic_Case_Study.Full_tripdata_update2`
+GROUP BY day_of_week
+ORDER BY day_of_week
+
+/* his query uses a CASE statement within the SUM function to filter the count values based on whether the rideable_type is member or casual. It then groups the results by rideable_type and calculates the total number of rides for each rider type.
+*/
+SELECT 
+  rideable_type,
+  SUM(CASE WHEN member_casual = 'member' THEN 1 ELSE 0 END) AS total_member_rides,
+  SUM(CASE WHEN member_casual = 'casual' THEN 1 ELSE 0 END) AS total_casual_rides
+FROM `Cyclistic_Case_Study.Full_tripdata_update2`
+GROUP BY rideable_type
+ORDER BY rideable_type
