@@ -3,8 +3,9 @@
 
 SELECT 
   rideable_type,
+  member_casual,
   SUM(CASE WHEN member_casual = 'member' THEN 1 ELSE 0 END) AS total_member_rides,
   SUM(CASE WHEN member_casual = 'casual' THEN 1 ELSE 0 END) AS total_casual_rides
 FROM `Cyclistic_Case_Study.Full_tripdata_update2`
-GROUP BY rideable_type
+GROUP BY rideable_type,member_casual
 ORDER BY rideable_type
