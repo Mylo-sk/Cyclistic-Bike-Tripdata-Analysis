@@ -12,4 +12,22 @@ FROM
 GROUP BY 
   start_station_name, start_lng, start_lat
 ORDER BY 
-  total DESC LIMIT 1000
+  total DESC LIMIT 100
+  
+  
+/* To check out the most popular ended station for users for both members and casual bike users
+*/
+
+SELECT 
+  end_station_name,
+  end_lng,
+  end_lat,
+  SUM(CASE WHEN ride_id = ride_id AND ended_station_name = start_station_name THEN 1 ELSE 0 END) AS total,
+  SUM(CASE WHEN member_casual = 'member' AND end_station_name = end_station_name THEN 1 ELSE 0 END) AS member,
+  SUM(CASE WHEN member_casual = 'casual' AND end_station_name = end_station_name THEN 1 ELSE 0 END) AS casual
+FROM 
+  `Cyclistic_Case_Study.Full_tripdata_update2`
+GROUP BY 
+  end_station_name, end_lng, end_lat
+ORDER BY 
+  total DESC LIMIT 100
