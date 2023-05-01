@@ -1,0 +1,10 @@
+/* To find the type of bike each user rider used 
+*/
+
+SELECT 
+  rideable_type,
+  SUM(CASE WHEN member_casual = 'member' THEN 1 ELSE 0 END) AS total_member_rides,
+  SUM(CASE WHEN member_casual = 'casual' THEN 1 ELSE 0 END) AS total_casual_rides
+FROM `Cyclistic_Case_Study.Full_tripdata_update2`
+GROUP BY rideable_type
+ORDER BY rideable_type
